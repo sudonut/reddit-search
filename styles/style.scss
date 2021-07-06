@@ -1,0 +1,50 @@
+@mixin flexbox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+.search-container {
+  @include flexbox();
+  height: 14rem;
+  background: brown;
+}
+
+.results-container {
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 27rem);
+  grid-gap: 1em; 
+  justify-content: center;
+  background: cadetblue;
+}
+
+.results-wrap {
+  height: 32rem;
+  width: auto;
+  background: cornflowerblue;
+}
+
+.thumbnail {
+  height: 100%;
+  width: auto;
+  display: flex;
+  justify-content: center;
+}
+
+img {
+  height: 100%;
+  width: 100%;
+}
