@@ -25,8 +25,8 @@ body {
 .results-container {
   height: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, 27rem);
-  grid-gap: 1em; 
+  grid-template-columns: repeat(auto-fill, 23rem);
+  grid-gap: 7em; 
   justify-content: center;
   background: cadetblue;
 }
@@ -45,6 +45,5 @@ body {
 }
 
 img {
-  height: 100%;
-  width: 100%;
+  max-width: 100%;
 }

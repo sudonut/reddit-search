@@ -32,9 +32,9 @@ body {
   height: 100%;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: (27rem)[auto-fit];
-      grid-template-columns: repeat(auto-fit, 27rem);
-  grid-gap: 1em;
+  -ms-grid-columns: (23rem)[auto-fill];
+      grid-template-columns: repeat(auto-fill, 23rem);
+  grid-gap: 7em;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
@@ -59,7 +59,6 @@ body {
 }
 
 img {
-  height: 100%;
-  width: 100%;
+  max-width: 100%;
 }
 /*# sourceMappingURL=style.css.map */
