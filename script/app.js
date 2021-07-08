@@ -2,14 +2,14 @@ document.getElementById("submit-search").addEventListener("click", fetchSubreddi
 
 async function fetchSubreddit(e) {
   e.preventDefault();
-  let subreddit = document.getElementById("sub-input").value;
+  const subreddit = document.getElementById("sub-input").value;
   const response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
   const subData = await response.json();
-  let posts = subData.data.children
+  const posts = subData.data.children
   console.log(posts);
 
   function createPost() {
-    let postsContainer = document.getElementById("posts-container");
+    const postsContainer = document.getElementById("posts-container");
     // Create a new div for each image
     for (let i = 0; i < posts.length; i++) {
       let img = new Image();

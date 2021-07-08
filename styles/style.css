@@ -58,6 +58,7 @@ body {
 
 .results-container {
   height: 100%;
+  padding-top: 8rem;
   display: -ms-grid;
   display: grid;
   -webkit-box-align: center;
