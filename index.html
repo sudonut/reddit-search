@@ -1,29 +1,38 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Subreddit Search</title>
+    <meta name="description" content="" />
+    <meta
+      name="viewport"
+      content="width=device-width, 
+    initial-scale=1"
+    />
+    <script src="https://kit.fontawesome.com/37cb0d4f63.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles/style.css" />
   </head>
   <body>
     <div class="search-container">
-      <h1>Reddit Search</h1>
-      <form action="">
-        <input type="search" name="" id="sub-input">
-        <button type="" id="submit-search">Let's do it!</button>
+      <h1>Subreddit Search</h1>
+      <form class="search-form">
+        <input type="search" class="text-input" id="sub-input" placeholder="Enter any subreddit name.." />
+        <button class="form-submit" id="submit-search"><i class="fas fa-search"></i></button>
       </form>
     </div>
     <div class="results-container" id="posts-container">
       <div class="results-wrap">
-        <div class="thumbnail" id="thumbnail">
-          
-        </div>
+        <div class="thumbnail" id="thumbnail"></div>
       </div>
     </div>
-    
+
     <script src="script/app.js" async defer></script>
   </body>
 </html>

@@ -9,6 +9,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
 }
 
 body {
@@ -22,16 +23,39 @@ body {
   background: brown;
 }
 
+.search-form {
+  display: flex;
+  height: 2.6rem;
+  width: 30rem;
+  & .text-input {
+    font-size: 1.6rem;
+    padding: 6px;
+    border: 0;
+    border-radius: 3px;
+    width: 90%;
+  }
+  & .form-submit {
+    width: 9%;
+    font-size: 1.2rem;
+    background: black;
+    border: none;
+    color: white;
+  }
+}
+
 .results-container {
   height: 100%;
   display: grid;
+  align-items: center;
   grid-template-columns: repeat(auto-fill, 23rem);
   grid-gap: 7em; 
   justify-content: center;
+  overflow: scroll;
   background: cadetblue;
 }
 
 .results-wrap {
+  display: contents;
   height: 32rem;
   width: auto;
   background: cornflowerblue;
