@@ -1,5 +1,7 @@
 document.getElementById("submit-search").addEventListener("click", fetchSubreddit);
 
+const postsContainer = document.getElementById("posts-container");
+
 async function fetchSubreddit(e) {
   e.preventDefault();
   const subreddit = document.getElementById("sub-input").value;
@@ -9,7 +11,6 @@ async function fetchSubreddit(e) {
   console.log(posts);
 
   function createPost() {
-    const postsContainer = document.getElementById("posts-container");
     // Create a new div for each image
     for (let i = 0; i < posts.length; i++) {
       let img = new Image();
@@ -27,5 +28,11 @@ async function fetchSubreddit(e) {
   createPost();
 }
 
+postsContainer.addEventListener("scroll", async (e) => {
+  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
+    fetchSubreddit(e);
+    console.log("Est");
+  }
+})
 //Would this make sense to someone else?
 
