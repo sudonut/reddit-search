@@ -10,7 +10,7 @@ async function fetchPosts(e) {
   loader.classList.add("active");
   isFetching = true;
 
-  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
+  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json`, {mode: "cors"});
   let subData = await response.json();
   let posts = subData.data.children;
   let afterVal = subData.data.after;
