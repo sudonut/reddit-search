@@ -7,7 +7,7 @@ At minimum the user should be able to:
 - Scroll down the page to load more images
 
 Features I will be adding in the future:
-~~- Add a loading indicator when fetching new posts~~
+- ~~Add a loading indicator when fetching new posts~~
 - A way for the user to see the amount of upvotes a post has
 - Allow the user to be taken to the specific post on reddit if they click on an image
 - Like posts locally without a reddit account
