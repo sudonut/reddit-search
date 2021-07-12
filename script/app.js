@@ -1,7 +1,7 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
-const subreddit = document.getElementById("sub-input").value;
 let loader = document.querySelector(".load-container");
+const subreddit = document.getElementById("sub-input").value;
 
 let isFetching = false;
 
@@ -10,7 +10,7 @@ async function fetchPosts(e) {
   loader.classList.add("active");
   isFetching = true;
 
-  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25`);
+  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json`);
   let subData = await response.json();
   let posts = subData.data.children;
   let afterVal = subData.data.after;
@@ -24,6 +24,7 @@ async function fetchPosts(e) {
 
   isFetching = false;
   loader.classList.remove("active");
+
   clearPosts(postsContainer);
   createPost(posts);
   fetchScroll(afterVal);
@@ -33,7 +34,7 @@ async function fetchPosts(e) {
 function createPost(posts) {
   for (let i = 0; i < posts.length; i++) {
     loader.classList.add("active");
-    
+
     let img = new Image();
     img.src = posts[i].data["url_overridden_by_dest"];
 
