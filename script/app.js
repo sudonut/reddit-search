@@ -7,7 +7,7 @@ async function fetchPosts(e) {
   let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25`);
   let subData = await response.json();
   let posts = subData.data.children;
-  afterVal = subData.data.after;
+  let afterVal = subData.data.after;
   // Prevents duplicate posts
   if (posts && posts.length > 0) {
     lastId = posts[posts.length - 1].data.id;
@@ -52,4 +52,4 @@ function fetchScroll(afterVal) {
       createPost(posts);
     };
   });
-}
+};
