@@ -1,19 +1,29 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
+const subreddit = document.getElementById("sub-input").value;
+let loader = document.querySelector(".load-container");
+
+let isFetching = false;
 
 async function fetchPosts(e) {
   e.preventDefault();
-  const subreddit = document.getElementById("sub-input").value;
+  loader.classList.add("active");
+  isFetching = true;
+
   let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25`);
   let subData = await response.json();
   let posts = subData.data.children;
   let afterVal = subData.data.after;
+
   // Prevents duplicate posts
   if (posts && posts.length > 0) {
     lastId = posts[posts.length - 1].data.id;
   } else {
     lastId = undefined;
   }
+
+  isFetching = false;
+  loader.classList.remove("active");
   clearPosts(postsContainer);
   createPost(posts);
   fetchScroll(afterVal);
@@ -22,6 +32,8 @@ async function fetchPosts(e) {
 // Create a new div for each image
 function createPost(posts) {
   for (let i = 0; i < posts.length; i++) {
+    loader.classList.add("active");
+    
     let img = new Image();
     img.src = posts[i].data["url_overridden_by_dest"];
 
@@ -31,7 +43,11 @@ function createPost(posts) {
 
     let newImg = document.createElement("div");
     newImg.className = "thumbnail";
-    newDiv.appendChild(img)
+    newDiv.appendChild(img);
+    
+    setTimeout(() => {
+      loader.classList.remove("active");
+    }, 500)
   };
 };
 
@@ -43,7 +59,9 @@ function clearPosts(postsContainer) {
 
 function fetchScroll(afterVal) {
   postsContainer.addEventListener("scroll", async () => {
-    const subreddit = document.getElementById("sub-input").value;
+    // Do not run if currently fetching data
+    if (isFetching) return;
+
     if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
       let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`)
       let subData = await response.json();
