@@ -60,6 +60,7 @@ function clearPosts(postsContainer) {
 };
 
 function fetchScroll(afterVal) {
+  let subreddit = document.getElementById("sub-input").value;
   postsContainer.addEventListener("scroll", async () => {
     // Do not run if currently fetching data
     if (isFetching) return;
