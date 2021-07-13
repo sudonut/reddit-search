@@ -25,7 +25,7 @@ async function fetchPosts(e) {
 
   isFetching = false;
   loader.classList.remove("active");
-  console.log(posts);
+
   clearPosts(postsContainer);
   createPost(posts);
   fetchScroll(afterVal);
@@ -64,14 +64,15 @@ function fetchScroll(afterVal) {
     // Do not run if currently fetching data
     if (isFetching) return;
 
+    let subreddit = document.getElementById("sub-input").value;
     if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-      let subreddit = document.getElementById("sub-input").value;
+      isFetching = true;
       let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`);
       let subData = await response.json();
       afterVal = subData.data.after;
       let posts = subData.data.children;
-      console.log(posts);
       createPost(posts);
+      isFetching = false;
     };
   });
 };
