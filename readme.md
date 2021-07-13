@@ -21,4 +21,4 @@ In this project, I've learned how to:
 
 * Known issues
 - Sometimes the same fetch url will be called when the user scrolls down too quickly
-- Some images are not available or the url is invalid
+- Some images are not available or the url is invalid 
