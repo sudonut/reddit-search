@@ -1,16 +1,17 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 let loader = document.querySelector(".load-container");
-const subreddit = document.getElementById("sub-input").value;
+
 
 let isFetching = false;
 
 async function fetchPosts(e) {
+  let subreddit = document.getElementById("sub-input").value;
   e.preventDefault();
   loader.classList.add("active");
   isFetching = true;
 
-  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json`, {mode: "cors"});
+  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25`, {mode: "cors"});
   let subData = await response.json();
   let posts = subData.data.children;
   let afterVal = subData.data.after;
@@ -56,7 +57,7 @@ function clearPosts(postsContainer) {
   while (postsContainer.firstChild) {
     postsContainer.removeChild(postsContainer.firstChild);
   }
-}
+};
 
 function fetchScroll(afterVal) {
   postsContainer.addEventListener("scroll", async () => {
@@ -64,7 +65,7 @@ function fetchScroll(afterVal) {
     if (isFetching) return;
 
     if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-      let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`)
+      let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`);
       let subData = await response.json();
       afterVal = subData.data.after;
       let posts = subData.data.children;
