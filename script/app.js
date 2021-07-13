@@ -2,7 +2,6 @@ document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 let loader = document.querySelector(".load-container");
 
-
 let isFetching = false;
 
 async function fetchPosts(e) {
@@ -23,12 +22,13 @@ async function fetchPosts(e) {
     lastId = undefined;
   }
 
-  isFetching = false;
   loader.classList.remove("active");
 
+  fetchScroll(afterVal);
   clearPosts(postsContainer);
   createPost(posts);
-  fetchScroll(afterVal);
+
+  isFetching = false;
 };
 
 // Create a new div for each image
@@ -69,8 +69,8 @@ function fetchScroll(afterVal) {
       isFetching = true;
       let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`);
       let subData = await response.json();
-      afterVal = subData.data.after;
       let posts = subData.data.children;
+      afterVal = subData.data.after;
       createPost(posts);
       isFetching = false;
     };
