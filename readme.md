@@ -19,6 +19,6 @@ In this project, I've learned how to:
 - Clear all of the current elements on the page without reloading
 - Fetch complex data from an API and display that information to the user
 
-* Known issues
+Known issues
 - Sometimes the same fetch url will be called when the user scrolls down too quickly
 - Some images are not available or the url is invalid

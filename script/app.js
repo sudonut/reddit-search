@@ -1,26 +1,37 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 let loader = document.querySelector(".load-container");
+let inputField = document.getElementById("sub-input");
+
+inputField.addEventListener("change", () => {
+  nextPageId = undefined;
+  clearPosts(postsContainer);
+});
+
+function clearPosts(postsContainer) {
+  while (postsContainer.firstChild) {
+    postsContainer.removeChild(postsContainer.firstChild);
+  }
+};
 
 let isFetching = false;
-// let postIds = [];
 let nextPageId;
+
 async function fetchPosts(e) {
-  let subreddit = document.getElementById("sub-input").value;
-  // Find a way to check if the input value changed since last intialization so that 
-  //nextPage ID becomes undefined when fetching for a new subreddit
   e.preventDefault();
-  loader.classList.add("active");
+
   isFetching = true;
+  loader.classList.add("active");
+
+  let subreddit = inputField.value;
+  if (nextPageId === undefined) {
+    nextPageId = ""
+  }
 
   let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
-  let subData = await response.json();
-  // If response contains an After value, fetch again with the after value
-  // Can we sstore the after value that's fetched and throw it into an array for later use?
-  // Push the nextPageId value into the array, on next fetch request use that id and pop it off the array
-  // When the user searches for something new, clear/pop the current id off the array 
-  let posts = subData.data.children;
-  nextPageId = subData.data.after;
+  let data = await response.json();
+  let posts = data.data.children;
+  nextPageId = data.data.after;
 
   // Prevents duplicate posts
   if (posts && posts.length > 0) {
@@ -29,13 +40,9 @@ async function fetchPosts(e) {
     lastId = undefined;
   }
 
-  loader.classList.remove("active");
-
-  loadNewPosts(nextPageId);
-  clearPosts(postsContainer);
   createPost(posts);
-
   isFetching = false;
+  loader.classList.remove("active");
 };
 
 // Create a new div for each image
@@ -60,39 +67,13 @@ function createPost(posts) {
   };
 };
 
-function clearPosts(postsContainer) {
-  while (postsContainer.firstChild) {
-    postsContainer.removeChild(postsContainer.firstChild);
-  }
-};
-
-function loadNewPosts(nextPageId) {
-  postsContainer.addEventListener("scroll", async () => {
-    // Do not run if currently fetching data
-    if (isFetching) return;
-
-    let subreddit = document.getElementById("sub-input").value;
-    if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-      isFetching = true;
-      let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`);
-      let subData = await response.json();
-      let posts = subData.data.children;
-      nextPageId = subData.data.after;
-      createPost(posts);
-      isFetching = false;
-    };
-  });
-};
-
-setTimeout(() => {
-  console.log(nextPageId);
-},4000)
-
-// The solution is to declare an empty variable nextPageId and give it the value of 
-// the after id from the api. With that, during the next function call the variable will
-// be used as the value passed into the end of the fetch request
-// 
-// On intial load, assign it a random reddit page
-// 
-// 
-// 
+postsContainer.addEventListener("scroll", async (e) => {
+  // Do not run if currently fetching data
+  if (isFetching) return;
+  
+  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
+    isFetching = true;
+    await fetchPosts(e)
+    isFetching = false;
+  };
+});
