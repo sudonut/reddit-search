@@ -1,7 +1,7 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
+let inputField = document.getElementById("sub-input");
 const postsContainer = document.getElementById("posts-container");
 let loader = document.querySelector(".load-container");
-let inputField = document.getElementById("sub-input");
 
 inputField.addEventListener("change", () => {
   nextPageId = undefined;
@@ -17,9 +17,20 @@ function clearPosts(postsContainer) {
 let isFetching = false;
 let nextPageId;
 
+postsContainer.addEventListener("scroll", async (e) => {
+  // Do not run if currently fetching data
+  if (isFetching) return;
+
+  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
+    isFetching = true;
+    await fetchPosts(e)
+    isFetching = false;
+  };
+});
+
 async function fetchPosts(e) {
   e.preventDefault();
-
+  if (isFetching) return;
   isFetching = true;
   loader.classList.add("active");
 
@@ -32,13 +43,6 @@ async function fetchPosts(e) {
   let data = await response.json();
   let posts = data.data.children;
   nextPageId = data.data.after;
-
-  // Prevents duplicate posts
-  if (posts && posts.length > 0) {
-    lastId = posts[posts.length - 1].data.id;
-  } else {
-    lastId = undefined;
-  }
 
   createPost(posts);
   isFetching = false;
@@ -66,14 +70,3 @@ function createPost(posts) {
     }, 500)
   };
 };
-
-postsContainer.addEventListener("scroll", async (e) => {
-  // Do not run if currently fetching data
-  if (isFetching) return;
-  
-  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-    isFetching = true;
-    await fetchPosts(e)
-    isFetching = false;
-  };
-});
