@@ -1,20 +1,37 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 let loader = document.querySelector(".load-container");
+let inputField = document.getElementById("sub-input");
 
+inputField.addEventListener("change", () => {
+  nextPageId = undefined;
+  clearPosts(postsContainer);
+});
+
+function clearPosts(postsContainer) {
+  while (postsContainer.firstChild) {
+    postsContainer.removeChild(postsContainer.firstChild);
+  }
+};
 
 let isFetching = false;
+let nextPageId;
 
 async function fetchPosts(e) {
-  let subreddit = document.getElementById("sub-input").value;
   e.preventDefault();
-  loader.classList.add("active");
-  isFetching = true;
 
-  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25`, {mode: "cors"});
-  let subData = await response.json();
-  let posts = subData.data.children;
-  let afterVal = subData.data.after;
+  isFetching = true;
+  loader.classList.add("active");
+
+  let subreddit = inputField.value;
+  if (nextPageId === undefined) {
+    nextPageId = ""
+  }
+
+  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
+  let data = await response.json();
+  let posts = data.data.children;
+  nextPageId = data.data.after;
 
   // Prevents duplicate posts
   if (posts && posts.length > 0) {
@@ -23,12 +40,9 @@ async function fetchPosts(e) {
     lastId = undefined;
   }
 
+  createPost(posts);
   isFetching = false;
   loader.classList.remove("active");
-
-  clearPosts(postsContainer);
-  createPost(posts);
-  fetchScroll(afterVal);
 };
 
 // Create a new div for each image
@@ -53,26 +67,13 @@ function createPost(posts) {
   };
 };
 
-function clearPosts(postsContainer) {
-  while (postsContainer.firstChild) {
-    postsContainer.removeChild(postsContainer.firstChild);
-  }
-};
-
-function fetchScroll(afterVal) {
-  postsContainer.addEventListener("scroll", async () => {
-    // Do not run if currently fetching data
-    if (isFetching) return;
-
-    let subreddit = document.getElementById("sub-input").value;
-    if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-      isFetching = true;
-      let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${afterVal}`);
-      let subData = await response.json();
-      afterVal = subData.data.after;
-      let posts = subData.data.children;
-      createPost(posts);
-      isFetching = false;
-    };
-  });
-};
+postsContainer.addEventListener("scroll", async (e) => {
+  // Do not run if currently fetching data
+  if (isFetching) return;
+  
+  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
+    isFetching = true;
+    await fetchPosts(e)
+    isFetching = false;
+  };
+});
