@@ -19,7 +19,9 @@ let nextPageId;
 
 async function fetchPosts(e) {
   e.preventDefault();
-
+  
+  if (isFetching) return;
+  
   isFetching = true;
   loader.classList.add("active");
 
@@ -72,8 +74,6 @@ postsContainer.addEventListener("scroll", async (e) => {
   if (isFetching) return;
   
   if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
-    isFetching = true;
     await fetchPosts(e)
-    isFetching = false;
   };
 });
