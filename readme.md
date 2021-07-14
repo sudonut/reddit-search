@@ -20,6 +20,5 @@ In this project, I've learned how to:
 - Fetch complex data from an API and display that information to the user
 
 Known issues
-- Sometimes the same fetch url will be called when the user scrolls down too quickly
-- Some images are not available or the url is invalid
 - ~~Bug where user could submit multiple fetch requests resulting in duplicate posts~~
+- Some images are not available or the url is invalid

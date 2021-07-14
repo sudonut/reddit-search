@@ -1,7 +1,7 @@
 document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
-let loader = document.querySelector(".load-container");
-let inputField = document.getElementById("sub-input");
+const loader = document.querySelector(".load-container");
+const inputField = document.getElementById("sub-input");
 
 inputField.addEventListener("change", () => {
   nextPageId = undefined;
@@ -30,9 +30,9 @@ async function fetchPosts(e) {
     nextPageId = ""
   }
 
-  let response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
-  let data = await response.json();
-  let posts = data.data.children;
+  const response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
+  const data = await response.json();
+  const posts = data.data.children;
   nextPageId = data.data.after;
 
   // Prevents duplicate posts
