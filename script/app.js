@@ -2,11 +2,49 @@ document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 const loader = document.querySelector(".load-container");
 const inputField = document.getElementById("sub-input");
-
 const column1 = document.getElementById("vertical-container1"),
-    column2 = document.getElementById("vertical-container2"),
-    column3 = document.getElementById("vertical-container3");
+column2 = document.getElementById("vertical-container2"),
+column3 = document.getElementById("vertical-container3");
 
+inputField.addEventListener("change", () => {
+  nextPageId = undefined;
+  clearPosts(postsContainer);
+});
+
+function clearPosts(postsContainer) {
+  while (postsContainer.firstChild) {
+    postsContainer.removeChild(postsContainer.firstChild);
+  }
+};
+
+let isFetching = false;
+let nextPageId;
+
+async function fetchPosts(e) {
+  e.preventDefault();
+  if (isFetching) return;
+  isFetching = true;
+  loader.classList.add("active");
+
+  let subreddit = inputField.value;
+  if (nextPageId === undefined) {
+    nextPageId = ""
+  }
+
+  const response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
+  const data = await response.json();
+  const posts = data.data.children;
+  nextPageId = data.data.after;
+
+  if (posts && posts.length > 0) {
+    lastId = posts[posts.length - 1].data.id;
+  } else {
+    lastId = undefined;
+  }
+  createPost(posts)
+  isFetching = false;
+  loader.classList.remove("active");
+};
 
 function createPost(posts) {
   let columnsArray = [column1, column2, column3];
@@ -32,56 +70,11 @@ function createPost(posts) {
   });
 };
 
-inputField.addEventListener("change", () => {
-  nextPageId = undefined;
-  clearPosts(postsContainer);
-});
-
-function clearPosts(postsContainer) {
-  while (postsContainer.firstChild) {
-    postsContainer.removeChild(postsContainer.firstChild);
-  }
-};
-
-let isFetching = false;
-let nextPageId;
-
-async function fetchPosts(e) {
-  e.preventDefault();
-
-  if (isFetching) return;
-
-  isFetching = true;
-  loader.classList.add("active");
-
-  let subreddit = inputField.value;
-  if (nextPageId === undefined) {
-    nextPageId = ""
-  }
-
-  const response = await fetch(`https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`, {mode: "cors"});
-  const data = await response.json();
-  const posts = data.data.children;
-  nextPageId = data.data.after;
-
-  console.log(posts)
-
-  if (posts && posts.length > 0) {
-    lastId = posts[posts.length - 1].data.id;
-  } else {
-    lastId = undefined;
-  }
-
-  createPost(posts)
-  isFetching = false;
-  loader.classList.remove("active");
-};
-
 window.addEventListener("scroll", async (e) => {
   // Do not run if currently fetching data
   if (isFetching) return;
 
-  if (postsContainer.scrollTop + postsContainer.clientHeight >= postsContainer.scrollHeight) {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
     await fetchPosts(e)
   };
 });

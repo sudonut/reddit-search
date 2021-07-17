@@ -55,23 +55,14 @@ body {
   justify-content: center;
   overflow-y: auto;
   background: #202e37;
+  & #vertical-container2 {
+    margin: 0 5px 0 5px;
+  }
 }
 
 .vertical-wrapper {
   height: 100%;
   width: 28%;
-}
-
-#vertical-contater1 {
-  background: chocolate;
-}
-
-#vertical-contater2 {
-  background: gray;
-}
-
-#vertical-contater3 {
-  background: hotpink;
 }
 
 @media (max-width: 1194px) {
