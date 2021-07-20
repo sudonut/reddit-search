@@ -2,20 +2,18 @@ document.getElementById("submit-search").addEventListener("click", fetchPosts);
 const postsContainer = document.getElementById("posts-container");
 const loader = document.querySelector(".load-container");
 const inputField = document.getElementById("sub-input");
-const column1 = document.getElementById("vertical-container1"),
-column2 = document.getElementById("vertical-container2"),
-column3 = document.getElementById("vertical-container3");
+
 
 inputField.addEventListener("change", () => {
   nextPageId = undefined;
-  clearPosts(postsContainer);
+  let columnsWrap = document.querySelectorAll(".vertical-wrapper");
+  columnsArr = Array.from(columnsWrap);
+  columnsArr.forEach((item) => {
+    while (item.firstChild) {
+      item.removeChild(item.firstChild);
+    };
+  });
 });
-
-function clearPosts(postsContainer) {
-  while (postsContainer.firstChild) {
-    postsContainer.removeChild(postsContainer.firstChild);
-  }
-};
 
 let isFetching = false;
 let nextPageId;
@@ -47,6 +45,10 @@ async function fetchPosts(e) {
 };
 
 function createPost(posts) {
+  const column1 = document.getElementById("vertical-container1"),
+  column2 = document.getElementById("vertical-container2"),
+  column3 = document.getElementById("vertical-container3");
+
   let columnsArray = [column1, column2, column3];
   columnsArray.forEach((item) => {
     for (let i = 0; i < 7; i++) {
@@ -74,7 +76,7 @@ window.addEventListener("scroll", async (e) => {
   // Do not run if currently fetching data
   if (isFetching) return;
 
-  if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+  if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 500) {
     await fetchPosts(e)
   };
 });
