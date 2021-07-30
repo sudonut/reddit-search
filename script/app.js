@@ -3,14 +3,13 @@ const postsContainer = document.getElementById("posts-container");
 const loader = document.querySelector(".load-container");
 const inputField = document.getElementById("sub-input");
 
-
 inputField.addEventListener("change", () => {
   nextPageId = undefined;
   let columnsWrap = document.querySelectorAll(".vertical-wrapper");
   columnsArr = Array.from(columnsWrap);
-  columnsArr.forEach((item) => {
-    while (item.firstChild) {
-      item.removeChild(item.firstChild);
+  columnsArr.forEach((column) => {
+    while (column.firstChild) {
+      column.removeChild(column.firstChild);
     };
   });
 });
@@ -76,7 +75,7 @@ window.addEventListener("scroll", async (e) => {
   // Do not run if currently fetching data
   if (isFetching) return;
 
-  if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 500) {
+  if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 1000) {
     await fetchPosts(e)
   };
 });
