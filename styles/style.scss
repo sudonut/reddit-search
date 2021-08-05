@@ -18,6 +18,8 @@ body {
 
 .search-container {
   @include flexbox();
+  position: fixed;
+  z-index: 1;
   justify-content: space-evenly;
   position: fixed;
   width: 100%;
@@ -25,7 +27,6 @@ body {
   color: white;
   background: #293743;
 }
-
 
 .search-form {
   display: flex;
@@ -48,6 +49,8 @@ body {
 }
 
 .results-container {
+  position: relative;
+  top: 6rem;
   min-height: 100vh;
   display: flex;
   justify-content: center;
@@ -61,6 +64,8 @@ body {
 .vertical-wrapper {
   height: 100%;
   width: 28%;
+  display: flex;
+  flex-direction: column;
 }
 
 @media (max-width: 1194px) {
@@ -87,6 +92,7 @@ body {
 }
 
 img {
+  margin: 4px 0 4px 0;
   max-width: 100%;
 }
 
