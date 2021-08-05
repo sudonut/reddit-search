@@ -6,9 +6,14 @@ At minimum the user should be able to:
 - View images from the subreddit they specify
 - Scroll down the page to load more images
 
+How to use:
+1. Enter the name of the subreddit that you want to view images from inside the input field
+2. Images will generate, scroll down to load more images
+3. If you enter an invalid subreddit you will recieve an error.
+
 Features to be added in the future:
 - ~~Add a loading indicator when fetching new posts~~
-- Error handling
+- ~~Error handling~~
 - A way for the user to see the amount of upvotes a post has
 - Allow the user to be taken to the specific post on reddit if they click on an image
 - Like posts locally without a reddit account
@@ -21,4 +26,4 @@ In this project, I've learned how to:
 
 Known issues
 - ~~Bug where user could submit multiple fetch requests resulting in duplicate posts~~
-- Some images are not available or the url is invalid
+- ~~Some images display broken links if the url is not available or invalid~~

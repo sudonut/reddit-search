@@ -29,7 +29,7 @@ async function fetchPosts(e) {
     }
 
     const response = await fetch(
-      `https://www.reddit.com/r/${subreddit}.json?count=50&after=${nextPageId}`,
+      `https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`,
       { mode: "cors" }
     );
     const data = await response.json();
