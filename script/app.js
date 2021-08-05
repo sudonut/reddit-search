@@ -36,20 +36,14 @@ async function fetchPosts(e) {
     const posts = data.data.children;
     nextPageId = data.data.after;
 
-    if (posts && posts.length > 0) {
-      lastId = posts[posts.length - 1].data.id;
-    } else {
-      lastId = undefined;
-    }
-
     console.log(posts);
     createPost(posts);
   } catch (e) {
-    alert("ERROR FETCHING DATA");
+    alert("PLEASE ENTER A VALID SUBREDDIT");
   }
   isFetching = false;
   loader.classList.remove("active");
-}
+};
 
 function createPost(posts) {
   const column1 = document.getElementById("vertical-container1"),
@@ -59,8 +53,6 @@ function createPost(posts) {
   let columnsArray = [column1, column2, column3];
   columnsArray.forEach((item) => {
     for (let i = 0; i < 7; i++) {
-      loader.classList.add("active");
-
       let img = new Image();
       img.src = posts[i].data["url_overridden_by_dest"];
 
@@ -74,12 +66,9 @@ function createPost(posts) {
         newDiv.appendChild(img);
       };
     }
-    setTimeout(() => {
-      loader.classList.remove("active");
-    }, 500);
     posts.splice(0, 7);
   });
-}
+};
 
 window.addEventListener("scroll", async (e) => {
   // Do not run if currently fetching data
