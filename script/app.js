@@ -29,7 +29,7 @@ async function fetchPosts(e) {
     }
 
     const response = await fetch(
-      `https://www.reddit.com/r/${subreddit}.json?count=25&after=${nextPageId}`,
+      `https://www.reddit.com/r/${subreddit}.json?count=50&after=${nextPageId}`,
       { mode: "cors" }
     );
     const data = await response.json();
@@ -44,7 +44,6 @@ async function fetchPosts(e) {
 
     console.log(posts);
     createPost(posts);
-
   } catch (e) {
     alert("ERROR FETCHING DATA");
   }
@@ -64,16 +63,16 @@ function createPost(posts) {
 
       let img = new Image();
       img.src = posts[i].data["url_overridden_by_dest"];
-      // if (img.complete === false) {
 
-      // }
-      let newDiv = document.createElement("div");
-      newDiv.className = "results-wrap";
-      item.appendChild(newDiv);
+      img.onload = () => {
+        let newDiv = document.createElement("div");
+        newDiv.className = "results-wrap";
+        item.appendChild(newDiv);
 
-      let newImg = document.createElement("div");
-      newImg.className = "thumbnail";
-      newDiv.appendChild(img);
+        let newImg = document.createElement("div");
+        newImg.className = "thumbnail";
+        newDiv.appendChild(img);
+      };
     }
     setTimeout(() => {
       loader.classList.remove("active");
