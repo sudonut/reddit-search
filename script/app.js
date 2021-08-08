@@ -39,7 +39,7 @@ async function fetchPosts(e) {
     console.log(posts);
     createPost(posts);
   } catch (e) {
-    console.log(e);
+    alert("Error fetching subreddit info, please make sure the subreddit exists.");
   }
   isFetching = false;
   loader.classList.remove("active");
@@ -84,8 +84,8 @@ function createPost(posts) {
         subredditName.className = "subreddit-name";
         postTitle.className = "post-title";
 
-        subredditName.innerHTML = post.subreddit;
-        postTitle.innerHTML = post.title;
+        subredditName.textContent = post.subreddit;
+        postTitle.textContent = post.title;
 
         item.appendChild(newDiv);
         newDiv.appendChild(newOverlay);
