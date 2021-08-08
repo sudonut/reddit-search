@@ -39,7 +39,7 @@ async function fetchPosts(e) {
     console.log(posts);
     createPost(posts);
   } catch (e) {
-    alert("PLEASE ENTER A VALID SUBREDDIT");
+    console.log(e);
   }
   isFetching = false;
   loader.classList.remove("active");
@@ -62,38 +62,37 @@ function createPost(posts) {
     for (let i = 0; i < 7; i++) {
       let img = new Image();
       let test = posts[i].data["url_overridden_by_dest"];
-      if (test.match(/\.(jpeg|jpg|gif|png)$/)) {
-        img.src = test;
-        let newDiv = document.createElement("div");
-        let newOverlay = document.createElement("div");
-        let overlayLeft = document.createElement("div");
-        let overlayRight = document.createElement("div");
+      img.src = test;
+      
+      let newDiv = document.createElement("div");
+      let newOverlay = document.createElement("div");
+      let overlayLeft = document.createElement("div");
+      let overlayRight = document.createElement("div");
 
-        let subredditName = document.createElement("h1");
-        let postTitle = document.createElement("p");
-        let newImg = document.createElement("div");
+      let subredditName = document.createElement("h1");
+      let postTitle = document.createElement("p");
+      let newImg = document.createElement("div");
 
-        newDiv.className = "results-wrap";
-        newOverlay.className = "overlay";
-        newImg.className = "thumbnail";
-        overlayLeft.className = "overlay-info-left";
-        overlayRight.className = "overlay-info-right";
-        subredditName.className = "subreddit-name";
-        postTitle.className = "post-title";
+      newDiv.className = "results-wrap";
+      newOverlay.className = "overlay";
+      newImg.className = "thumbnail";
+      overlayLeft.className = "overlay-info-left";
+      overlayRight.className = "overlay-info-right";
+      subredditName.className = "subreddit-name";
+      postTitle.className = "post-title";
 
-        // let title = posts[i].data.subreddit;
-        // let subreddit = posts[i].data.subreddit;
-        subredditName.innerHTML = posts[i].data.subreddit;
-        postTitle.innerHTML = posts[i].data.title;
+      // let title = posts[i].data.subreddit;
+      // let subreddit = posts[i].data.subreddit;
+      subredditName.innerHTML = posts[i].data.subreddit;
+      postTitle.innerHTML = posts[i].data.title;
 
-        item.appendChild(newDiv);
-        newDiv.appendChild(newOverlay);
-        newOverlay.appendChild(overlayLeft);
-        newOverlay.appendChild(overlayRight);
-        overlayLeft.appendChild(subredditName);
-        overlayLeft.appendChild(postTitle);
-        newDiv.appendChild(img);
-      };
+      item.appendChild(newDiv);
+      newDiv.appendChild(newOverlay);
+      newOverlay.appendChild(overlayLeft);
+      newOverlay.appendChild(overlayRight);
+      overlayLeft.appendChild(subredditName);
+      overlayLeft.appendChild(postTitle);
+      newDiv.appendChild(img);
     }
     posts.splice(0, 7);
   });
