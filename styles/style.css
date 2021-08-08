@@ -100,23 +100,39 @@ body {
 }
 
 .results-wrap {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   position: relative;
   overflow: hidden;
   margin: 4px 0 4px 0;
 }
 
-.overlay {
-  height: 39.6%;
-  width: 100%;
-  top: 60%;
+.results-wrap .overlay {
+  position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  height: 0;
+  top: 100%;
+  -webkit-transition: 1s;
+  transition: 1s;
   position: absolute;
+  height: 40.6%;
+  width: 100%;
+  -webkit-transition: all .2s ease-out;
+  transition: all .2s ease-out;
   color: white;
   background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(19, 29, 40, 0)), to(rgba(19, 29, 40, 0.65)));
   background-image: linear-gradient(180deg, rgba(19, 29, 40, 0), rgba(19, 29, 40, 0.65));
+  z-index: 1;
+}
+
+.results-wrap:hover .overlay {
+  height: 39.6%;
+  top: 61%;
+  -webkit-transition: all .2s ease-in;
+  transition: all .2s ease-in;
   z-index: 1;
 }
 
