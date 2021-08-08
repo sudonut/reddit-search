@@ -45,6 +45,13 @@ async function fetchPosts(e) {
   loader.classList.remove("active");
 };
 
+// class Post {
+//   constructor(title, subreddit) {
+//     this.title = title;
+//     this.subreddit = subreddit;
+//   }
+// }
+
 function createPost(posts) {
   const column1 = document.getElementById("vertical-container1"),
     column2 = document.getElementById("vertical-container2"),
@@ -54,15 +61,37 @@ function createPost(posts) {
   columnsArray.forEach((item) => {
     for (let i = 0; i < 7; i++) {
       let img = new Image();
-      img.src = posts[i].data["url_overridden_by_dest"];
-
-      img.onload = () => {
+      let test = posts[i].data["url_overridden_by_dest"];
+      if (test.match(/\.(jpeg|jpg|gif|png)$/)) {
+        img.src = test;
         let newDiv = document.createElement("div");
-        newDiv.className = "results-wrap";
-        item.appendChild(newDiv);
+        let newOverlay = document.createElement("div");
+        let overlayLeft = document.createElement("div");
+        let overlayRight = document.createElement("div");
 
+        let subredditName = document.createElement("h1");
+        let postTitle = document.createElement("p");
         let newImg = document.createElement("div");
+
+        newDiv.className = "results-wrap";
+        newOverlay.className = "overlay";
         newImg.className = "thumbnail";
+        overlayLeft.className = "overlay-info-left";
+        overlayRight.className = "overlay-info-right";
+        subredditName.className = "subreddit-name";
+        postTitle.className = "post-title";
+
+        // let title = posts[i].data.subreddit;
+        // let subreddit = posts[i].data.subreddit;
+        subredditName.innerHTML = posts[i].data.subreddit;
+        postTitle.innerHTML = posts[i].data.title;
+
+        item.appendChild(newDiv);
+        newDiv.appendChild(newOverlay);
+        newOverlay.appendChild(overlayLeft);
+        newOverlay.appendChild(overlayRight);
+        overlayLeft.appendChild(subredditName);
+        overlayLeft.appendChild(postTitle);
         newDiv.appendChild(img);
       };
     }
@@ -81,3 +110,4 @@ window.addEventListener("scroll", async (e) => {
     await fetchPosts(e);
   }
 });
+
