@@ -354,10 +354,10 @@ img {
 
 @media (max-width: 488px) {
   .overlay {
-    height: 45.6%;
+    height: 69.6%;
   }
   .overlay-info-left {
-    font-size: 0.8rem;
+    font-size: 0.6rem;
     line-height: 1.2;
   }
 }
