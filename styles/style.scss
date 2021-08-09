@@ -216,4 +216,13 @@ img {
 
 }
 
-// media query 1194 width
+@media (max-width: 488px ) {
+  .overlay {
+    height: 45.6%;
+  }
+
+  .overlay-info-left {
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+}

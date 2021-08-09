@@ -351,4 +351,14 @@ img {
     border-radius: 5px;
   }
 }
+
+@media (max-width: 488px) {
+  .overlay {
+    height: 45.6%;
+  }
+  .overlay-info-left {
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+}
 /*# sourceMappingURL=style.css.map */
